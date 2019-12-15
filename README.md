@@ -7,6 +7,10 @@ Based on a [tutorial by Andreas Mantke](https://amantke.de/wp-content/uploads/20
 
 Another nice example can be found [here](https://blog.mdda.net/oss/2011/10/07/python-libreoffice).
 
+As introduction for scripting LibreOffice with Python see these sources:
+
+* [Transfer from Basic to Python](https://wiki.openoffice.org/wiki/Python/Transfer_from_Basic_to_Python)
+
 # File list
 
 * META-INF/manifest.xml -> manifest declaring all parts of the extension
@@ -29,7 +33,12 @@ This extension is released under the MIT License.
 
 # Requirements
 
-IcalImporter should run under Python 3.5 and newer. The following Python packages are necessary:
+IcalImporter should run under Python 3.5 and newer. Currently (December 2019) seems to ship with Python 3.5.
 
-* [Ics.py: iCalendar for Humans](https://github.com/C4ptainCrunch/ics.py/)
-* [Arrow: Better dates & times for Python](https://github.com/crsmithdev/arrow/)
+The following Python packages are necessary:
+
+* [Ics.py: iCalendar for Humans](https://github.com/C4ptainCrunch/ics.py/), licensed under the Apache 2.0 License.
+* [Arrow: Better dates & times for Python](https://github.com/crsmithdev/arrow/), licensed under the Apache 2.0 License.
+* [dateutil](https://github.com/dateutil/dateutil/) as dependency of Arrow, licensed under the Apache License and BSD License.
+* [tatsu](https://github.com/neogeny/tatsu) as dependency of ics, licensed under a BSD-style License.
+* [six](https://github.com/benjaminp/six) as dependency of ics, licensed under the MIT License.
