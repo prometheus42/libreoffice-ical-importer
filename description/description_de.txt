@@ -1,0 +1,1 @@
+Einfache Erweiterung für LibreOffice zum Importieren von Kalender-Dateien des iCalendar-Formates (.ics) nach LibreOffice Calc.

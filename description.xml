@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description xmlns="http://openoffice.org/extensions/description/2006" 
+    xmlns:d="http://openoffice.org/extensions/description/2006"
+    xmlns:lo="http://libreoffice.org/extensions/description/2011"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <identifier value="de.ichmann.libreoffice.import_ical"/>
+    <version value="0.1"/>
+    <platform value="all"/>
+    <display-name>
+        <name lang="de">iCalendar Import</name>
+        <name lang="en">iCalendar Import</name>
+    </display-name>
+    <publisher>
+        <name xlink:href="https://github.com/prometheus42/libreoffice-ical-importer">Christian Wichmann</name>
+    </publisher>
+    <icon>
+        <default xlink:href="images/icon.png"/>
+    </icon>
+    <dependencies>
+        <lo:LibreOffice-minimal-version d:name="LibreOffice 6.0" value="6.0"/>
+    </dependencies>
+   <extension-description>
+        <src xlink:href="description/description_en.txt" lang="en" />
+        <src xlink:href="description/description_de.txt" lang="de" />
+    </extension-description>
+    <registration>
+        <simple-license accept-by="admin">
+            <license-text xlink:href="registration/license_de.txt" lang="de" />
+            <license-text xlink:href="registration/license_en.txt" lang="en" />
+        </simple-license>
+    </registration>
+</description>

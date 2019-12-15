@@ -1,0 +1,1 @@
+Simple extension for LibreOffice for importing iCalendar files (.ics) into LibreOffice Calc.
