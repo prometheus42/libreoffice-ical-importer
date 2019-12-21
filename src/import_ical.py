@@ -1,8 +1,14 @@
 #! /usr/bin/env python3
 
+#
+# All modules are located in the 'pythonpath' sub-directory of the directory
+# 'src'. The script provider adds the directory to sys.path before the main
+# script is executed.
+#
+# Source: https://forum.openoffice.org/en/forum/viewtopic.php?f=45&t=69540
+#
 from arrow.arrow import Arrow
 from datetime import timedelta
-
 from ics import Calendar
 from ics.grammar.parse import ParseError
 
@@ -56,6 +62,13 @@ def read_ical_file(filename):
     """Reads an iCalendar file and returns all events from that file."""
     with open(filename, 'r') as calendar_file:
         c = Calendar(calendar_file.read())
+    #from icalendar import Calendar as Cal
+    #with open('/home/christian/Desktop/ical_import/test1.ics','rb') as g:
+    #    d = Cal.from_ical(g.read())
+    #    for e in d.walk():
+    #        print(e.name, e['summary'], e['dtstart'], e['dtend'], e['dtstamp'])
+    #        #if str(e.name) == 'VEVENT':
+    #        #    e.get('summary')
     return c.events
 
 
@@ -134,7 +147,7 @@ class ImportButton(unohelper.Base, XJobExecutor):
             except ParseError as e:
                 show_message_box(self.ctx, 'Fehler', 'Kalender-Datei ist fehlerhaft.')
                 print(e)
-        show_message_box(self.ctx, 'Kalender importiert', 'Die Kalender-Datei wurde erfolgreich importiert.')
+            show_message_box(self.ctx, 'Kalender importiert', 'Die Kalender-Datei wurde erfolgreich importiert.')
 
 
 def show_message_box(ctx, title, message):

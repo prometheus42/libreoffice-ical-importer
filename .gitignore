@@ -119,3 +119,7 @@ src/pythonpath/tatsu/*
 src/pythonpath/dateutil/*
 src/pythonpath/ics/*
 src/pythonpath/icalendar/*
+
+*.ics
+*.log
+*.oxt

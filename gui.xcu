@@ -10,8 +10,8 @@
             <node oor:name="com.platformedia.libreoffice.extensions.import_ical" oor:op="replace">
                 <prop oor:name="Title" oor:type="xs:string">
                     <value/>
-                    <value xml:lang="en-US">Importer</value>
-                    <value xml:lang="de">Importer</value>
+                    <value xml:lang="en-US">Tools</value>
+                    <value xml:lang="de">Werkzeuge</value>
                 </prop>
                 <node oor:name="Submenu">
                     <node oor:name="m1" oor:op="replace">
@@ -30,6 +30,19 @@
                             <value>com.sun.star.sheet.SpreadsheetDocument</value>
                         </prop>
                     </node>
+                </node>
+            </node>
+        </node>
+
+        <node oor:name="Images">
+            <node oor:name="com.platformedia.libreoffice.extensions.import_ical" oor:op="replace">
+                <prop oor:name="URL">
+                    <value>service:com.platformedia.libreoffice.extensions.import_ical.ImportButton?execute</value>
+                </prop>
+                <node oor:name="UserDefinedImages">
+                    <prop oor:name="ImageBigURL">
+                    <value>%origin%/images/menu_icon.png</value>
+                    </prop>    
                 </node>
             </node>
         </node>
