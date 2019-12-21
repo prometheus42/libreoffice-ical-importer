@@ -11,6 +11,18 @@ As introduction for scripting LibreOffice with Python see these sources:
 
 * [Transfer from Basic to Python](https://wiki.openoffice.org/wiki/Python/Transfer_from_Basic_to_Python)
 
+# Building standalone applications
+
+The file src/ical2csv_gui.py and src/ical2csv.py contain a CLI and a GUI application to convert iCalendar files into CSV files.
+
+To create a single EXE file for Windows user, a pyinstaller .spec file has to be created:
+
+    pyinstaller --onefile --windowed --add-data C:\Users\christian\AppData\Local\Programs\Python\Python38-32\Lib\site-packages\ics\grammar\contentline.ebnf;ics\grammar\ src\ical2csv_gui.py
+
+Alternativly, you can use the provided spec file in the repo:
+
+    pyinstaller ical2csv_gui.spec 
+
 # File list
 
 * META-INF/manifest.xml -> manifest declaring all parts of the extension
