@@ -6,7 +6,7 @@ block_cipher = None
 a = Analysis(['src\\ical2csv_gui.py'],
              pathex=['C:\\Users\\christian\\Documents\\libreoffice-ical-importer'],
              binaries=[],
-             datas=[('C:\\Users\\christian\\AppData\\Local\\Programs\\Python\\Python38-32\\Lib\\site-packages\\ics\\grammar\\contentline.ebnf', 'ics\\grammar')],
+             datas=[('C:\\Users\\christian\\AppData\\Local\\Programs\\Python\\Python38-32\\Lib\\site-packages\\ics\\grammar\\contentline.ebnf', 'ics\\grammar\\')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -30,4 +30,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=False )
+          console=False , icon='images\\icon.ico')

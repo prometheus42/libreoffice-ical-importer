@@ -17,7 +17,7 @@ The file src/ical2csv_gui.py and src/ical2csv.py contain a CLI and a GUI applica
 
 To create a single EXE file for Windows user, a pyinstaller .spec file has to be created:
 
-    pyinstaller --onefile --windowed --add-data C:\Users\christian\AppData\Local\Programs\Python\Python38-32\Lib\site-packages\ics\grammar\contentline.ebnf;ics\grammar\ src\ical2csv_gui.py
+    pyinstaller --onefile --windowed -i images/icon.ico --add-data C:\Users\christian\AppData\Local\Programs\Python\Python38-32\Lib\site-packages\ics\grammar\contentline.ebnf;ics\grammar\ src\ical2csv_gui.py
 
 Alternativly, you can use the provided spec file in the repo:
 
