@@ -4,7 +4,7 @@ import os
 import sys
 import logging
 import logging.handlers
-from tkinter import Tk, Frame, messagebox, StringVar, HORIZONTAL, VERTICAL
+from tkinter import Tk, Frame, PhotoImage, messagebox, StringVar, HORIZONTAL, VERTICAL
 from tkinter.ttk import Button, Label, Separator
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 
@@ -91,6 +91,8 @@ def show_gui():
     window.geometry('{}x{}'.format(WIDTH, HEIGHT))
     window.resizable(0, 0)
     window.eval('tk::PlaceWindow %s center' % window.winfo_pathname(window.winfo_id()))
+    photo = PhotoImage(file='./images/icon.png')
+    window.iconphoto(False, photo)
     #center(window)
 
     label1 = Label(window, text='iCalendar-Datei:')
