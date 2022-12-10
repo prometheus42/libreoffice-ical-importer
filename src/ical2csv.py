@@ -48,6 +48,8 @@ def marshal_data(data):
         return data.format('DD.MM.YYYY HH:mm:ss')
     elif type(data) == timedelta:
         return str(data)
+    elif type(data) == set:
+        return str(data)
     else:
         logger.error('Unsupported type: {}'.format(type(data)))
         raise ValueError()
