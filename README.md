@@ -45,10 +45,11 @@ This extension is released under the MIT License.
 
 # Requirements
 
-IcalImporter should run under Python 3.5 and newer. Currently (December 2019) seems to ship with Python 3.5.
+IcalImporter runs under Python 3.6 and newer. Currently (December 2019) LibreOffice seems to ship with Python 3.5.
 
 The following Python packages are necessary:
 
+* [click: Composable command line interface toolkit](https://palletsprojects.com/p/click/) licensed under the BSD License.
 * [Ics.py: iCalendar for Humans](https://github.com/C4ptainCrunch/ics.py/), licensed under the Apache 2.0 License.
 * [Arrow: Better dates & times for Python](https://github.com/crsmithdev/arrow/), licensed under the Apache 2.0 License.
 * [dateutil](https://github.com/dateutil/dateutil/) as dependency of Arrow, licensed under the Apache License and BSD License.

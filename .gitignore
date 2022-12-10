@@ -113,6 +113,8 @@ dmypy.json
 
 # End of https://www.gitignore.io/api/python,libreoffice
 
+docs
+
 src/pythonpath/six.py
 src/pythonpath/arrow/*
 src/pythonpath/tatsu/*
