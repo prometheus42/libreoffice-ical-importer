@@ -113,6 +113,7 @@ dmypy.json
 
 # End of https://www.gitignore.io/api/python,libreoffice
 
+ical2csv_gui.exe
 docs
 
 src/pythonpath/six.py

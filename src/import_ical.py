@@ -62,13 +62,6 @@ def read_ical_file(filename):
     """Reads an iCalendar file and returns all events from that file."""
     with open(filename, 'r') as calendar_file:
         c = Calendar(calendar_file.read())
-    #from icalendar import Calendar as Cal
-    #with open('/home/christian/Desktop/ical_import/test1.ics','rb') as g:
-    #    d = Cal.from_ical(g.read())
-    #    for e in d.walk():
-    #        print(e.name, e['summary'], e['dtstart'], e['dtend'], e['dtstamp'])
-    #        #if str(e.name) == 'VEVENT':
-    #        #    e.get('summary')
     return c.events
 
 
@@ -105,6 +98,8 @@ def fill_cell_with_data(doc, data, cell):
         if NumberFormatID == -1:  
             NumberFormatID = NumberFormat.addNew(FormatString, LocalSettings)
         cell.NumberFormat = NumberFormatID
+    elif type(data) == set:
+        cell.String = ', '.join([x for x in data])
     else:
         print('Unsupported type: {}'.format(type(data)))
         # return data without conversion to trigger an exception
