@@ -11,6 +11,16 @@ As introduction for scripting LibreOffice with Python see these sources:
 
 * [Transfer from Basic to Python](https://wiki.openoffice.org/wiki/Python/Transfer_from_Basic_to_Python)
 
+# Building LibreOffice extension
+
+To build a LibreOffice extension use the Makefile that is provided with the project:
+
+    make zip
+
+To install the extension in LibreOffice execute the following command:
+
+    make install
+
 # Building standalone applications
 
 The file src/ical2csv_gui.py and src/ical2csv.py contain a CLI and a GUI application to convert iCalendar files into CSV files.
