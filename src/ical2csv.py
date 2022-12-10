@@ -49,7 +49,7 @@ def marshal_data(data):
     elif type(data) == timedelta:
         return str(data)
     elif type(data) == set:
-        return str(data)
+        return ', '.join([x for x in data])
     else:
         logger.error('Unsupported type: {}'.format(type(data)))
         raise ValueError()
