@@ -33,6 +33,16 @@ Alternativly, you can use the provided spec file in the repo:
 
     pyinstaller ical2csv_gui.spec 
 
+# Usage in LibreOffice
+
+1. Download LibreOffice extension: https://github.com/prometheus42/libreoffice-ical-importer/releases/tag/v0.2
+2. Install extension in LibreOffice
+3. Open LibreOffice Calc
+4. Click on the tools ("Werkzeuge") menu and start the import function
+5. Choose iCal file
+
+The fields of the iCal file should be stored as columns in the table.
+
 # File list
 
 * META-INF/manifest.xml -> manifest declaring all parts of the extension
