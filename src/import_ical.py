@@ -129,7 +129,7 @@ class ImportButton(unohelper.Base, XJobExecutor):
             file_dialog.dispose()
             try:
                 # TODO: Allow multiple files to be imported into a single worksheet.
-                fill_table(self.ctx, list_of_files[0].replace('file://', ''))
+                fill_table(self.ctx, uno.fileUrlToSystemPath(list_of_files[0]))
             except UnicodeDecodeError as e:
                 show_message_box(self.ctx, 'Fehler', 'Fehler beim Einlesen der Datei.')
                 print(e)
