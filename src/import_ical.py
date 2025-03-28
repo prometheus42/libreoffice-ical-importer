@@ -7,8 +7,13 @@
 #
 # Source: https://forum.openoffice.org/en/forum/viewtopic.php?f=45&t=69540
 #
-from arrow.arrow import Arrow
+
+import sys
+import logging
+from pathlib import Path
 from datetime import timedelta
+
+from arrow.arrow import Arrow
 from ics import Calendar
 from ics.grammar.parse import ParseError
 
@@ -25,7 +30,7 @@ from com.sun.star.ui.dialogs.TemplateDescription import FILEOPEN_SIMPLE
 
 def fill_table(ctx, filename):
     """Fills the first worksheet with data from an iCalendar file.
-    
+
     All events from a given iCalendar file are imported. Every column
     represents a attribute from the file and has a corrsponding header. The
     cells will be configured with a number format depending on the type of data
@@ -46,12 +51,6 @@ def fill_table(ctx, filename):
         for column, name in enumerate(attr):
             cell = sheet.getCellByPosition(column, row+1)
             fill_cell_with_data(doc, getattr(e, name), cell)
-    #
-    # oBereich = oTab.getCellRangeByPosition(oZelle.CellAddress.Column, oZelle.CellAddress.row,
-    #                                        oZelle.CellAddress.Column + uBound(aZeile()), oZelle.CellAddress.row + uBound(aDaten))
-    # oBereich.setFormulaArray(aDaten)
-    # oBereich.setDataArray(aDaten)
-    #
     # mark all columns and set them to optimal width
     selection = sheet.getCellRangeByPosition(0, 1, len(attr)-1, 1)
     for c in selection.Columns:
@@ -67,38 +66,42 @@ def read_ical_file(filename):
 
 def fill_cell_with_data(doc, data, cell):
     """Fills a single cell with given data.
-    
+
     Before the data is stored in the cell of an worksheet, the type of the data
     is checked. All necessary conversion and type casts are done before the
     value of the cell is set."""
-    NumberFormat = doc.getNumberFormats()
-    LocalSettings = Locale()
-    LocalSettings.Language = 'de'
+    number_format = doc.getNumberFormats()
+    local_settings = Locale()
+    local_settings.Language = 'de'
     if not data:
         cell.String = ''
-    elif type(data) == str:
-        cell.String =  data
-    elif type(data) == Arrow:
+    elif isinstance(data, str):
+        cell.String = data
+    elif isinstance(data, Arrow):
         # write datetime into cell
         cell.String = data.format('DD.MM.YYYY HH:mm:ss')
         # set number format for cell
-        FormatString = 'TT.MM.JJJJ HH:MM:SS'
-        NumberFormatID = NumberFormat.queryKey(FormatString, LocalSettings, True)
+        format_string = 'TT.MM.JJJJ HH:MM:SS'
+        number_format_id = number_format.queryKey(
+            format_string, local_settings, True)
         # check whether a value was found for the requested format (-1 == no value)
-        if NumberFormatID == -1:  
-            NumberFormatID = NumberFormat.addNew(FormatString, LocalSettings)
-        cell.NumberFormat = NumberFormatID
-    elif type(data) == timedelta:
+        if number_format_id == -1:
+            number_format_id = number_format.addNew(
+                format_string, local_settings)
+        cell.NumberFormat = number_format_id
+    elif isinstance(data, timedelta):
         # write datetime into cell
         cell.String = str(data)
         # set number format for cell
-        FormatString = 'HH:MM:SS'
-        NumberFormatID = NumberFormat.queryKey(FormatString, LocalSettings, True)
+        format_string = 'HH:MM:SS'
+        number_format_id = number_format.queryKey(
+            format_string, local_settings, True)
         # check whether a value was found for the requested format (-1 == no value)
-        if NumberFormatID == -1:  
-            NumberFormatID = NumberFormat.addNew(FormatString, LocalSettings)
-        cell.NumberFormat = NumberFormatID
-    elif type(data) == set:
+        if number_format_id == -1:
+            number_format_id = number_format.addNew(
+                format_string, local_settings)
+        cell.NumberFormat = number_format_id
+    elif isinstance(data, set):
         cell.String = ', '.join([x for x in data])
     else:
         print('Unsupported type: {}'.format(type(data)))
@@ -147,14 +150,14 @@ class ImportButton(unohelper.Base, XJobExecutor):
 
 def show_message_box(ctx, title, message):
     """Shows a message box with a single button to acknowledge the information.
-    
+
     Source: https://docs.libreoffice.org/scripting/html/msgbox_8py_source.html
     """
-    myBox = msgbox.MsgBox(ctx)
-    myBox.addButton('OK')
-    myBox.renderFromBoxSize(150)
-    myBox.numberOflines = 2
-    myBox.show(message, 0, title)
+    message_box = msgbox.MsgBox(ctx)
+    message_box.addButton('OK')
+    message_box.renderFromBoxSize(150)
+    message_box.numberOflines = 2
+    message_box.show(message, 0, title)
 
 
 g_ImplementationHelper = unohelper.ImplementationHelper()
@@ -167,23 +170,24 @@ g_ImplementationHelper.addImplementation(
 
 if __name__ == '__main__':
     import os
- 
+
     # start OpenOffice.org, listen for connections and open testing document
-    os.system( "/usr/bin/libreoffice --calc '--accept=socket,host=localhost,port=2002;urp;' &" )
- 
+    os.system("/usr/bin/libreoffice --calc '--accept=socket,host=localhost,port=2002;urp;' &")
+
     # get local context info
     localContext = uno.getComponentContext()
-    resolver = localContext.ServiceManager.createInstanceWithContext("com.sun.star.bridge.UnoUrlResolver", localContext )
- 
+    resolver = localContext.ServiceManager.createInstanceWithContext(
+        "com.sun.star.bridge.UnoUrlResolver", localContext)
+
     ctx = None
 
     # wait until the OO.o starts and connection is established
     while ctx == None:
         try:
-            ctx = resolver.resolve("uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext" )
-        except:
+            ctx = resolver.resolve("uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext")
+        except Exception as e:
             pass
- 
+
     print("Testing ImportButton...")
 
     # trigger our job
