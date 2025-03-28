@@ -126,3 +126,4 @@ src/pythonpath/icalendar/*
 *.ics
 *.log
 *.oxt
+misc/*
