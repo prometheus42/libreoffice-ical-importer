@@ -65,7 +65,7 @@ This extension is released under the MIT License.
 
 # Requirements
 
-IcalImporter runs under Python 3.6 and newer. Currently (December 2019) LibreOffice seems to ship with Python 3.5.
+IcalImporter runs under Python 3.6 and newer. Currently (March 2025) LibreOffice seems to ship with Python 3.10.
 
 The following Python packages are necessary:
 
