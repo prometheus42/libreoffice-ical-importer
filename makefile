@@ -20,9 +20,6 @@ zip:
 		localizations/* \
 		src/pythonpath/*
 
-build:
-	/usr/bin/env python3 ./build.py
-
 install:
 	unopkg add import_ical.oxt
 

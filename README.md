@@ -9,6 +9,7 @@ Another nice example can be found [here](https://blog.mdda.net/oss/2011/10/07/py
 
 As introduction for scripting LibreOffice with Python see these sources:
 
+* [Designing & Developing Python Applications](https://wiki.documentfoundation.org/Macros/Python_Design_Guide)
 * [OpenOffice Developer Guide: Extensions](https://wiki.openoffice.org/wiki/Documentation/DevGuide/Extensions/Extensions)
 * [Transfer from Basic to Python](https://wiki.openoffice.org/wiki/Python/Transfer_from_Basic_to_Python)
 * [Interface-oriented programming in OpenOffice / LibreOffice: automate your office tasks with Python Macros](https://christopher5106.github.io/office/2015/12/06/openoffice-libreoffice-automate-your-office-tasks-with-python-macros.html)
