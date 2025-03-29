@@ -115,12 +115,49 @@ class ImportButton(unohelper.Base, XJobExecutor):
     After the click on the menu item, a file picker dialog is shown for the
     user to choose the file that should be imported. Only the file extension
     .ics is supported and only one file is imported!"""
+
     def __init__(self, ctx):
         self.ctx = ctx
- 
+        self.init_logging()
+
+    def init_logging(self):
+        """Initializes the logger and sets log file name and log levels.
+
+        This code is inspired by the LibreOffice extension "Code Highligher 2"
+        licensed under the GNU General Public License version 3."""
+        self.logger = logging.getLogger('import_ical')
+        formatter = logging.Formatter("%(levelname)s [%(funcName)s::%(lineno)d] %(message)s")
+        self.logger.setLevel(logging.DEBUG)
+        console_handler = logging.StreamHandler()
+        console_handler.setFormatter(formatter)
+        self.logger.addHandler(console_handler)
+        try:
+            # log file should be stored at:
+            #  - linux: /home/<username>/.config/libreoffice/4/user/
+            #  - windows: C:\Users\<username>\AppData\Roaming\LibreOffice\4\user\
+            userpath = uno.getComponentContext().ServiceManager.createInstance(
+                            "com.sun.star.util.PathSubstitution").substituteVariables("$(user)", True)
+            logfile = Path(uno.fileUrlToSystemPath(userpath)) / 'import_ical.log'
+            file_handler = logging.FileHandler(logfile, mode="w", delay=True)
+            file_handler.setLevel(logging.DEBUG)
+            file_handler.setFormatter(formatter)
+            self.logger.addHandler(file_handler)
+        except RuntimeException:
+            # At installation time, no context is available -> just ignore it.
+            pass
+
+    def log_python_version(self):
+        self.logger.info('Python-Version: {}'.format(sys.version))
+        self.logger.info('Python-Path: {}'.format(sys.path))
+        self.logger.info('Python-Platform: {}'.format(sys.platform))
+        self.logger.info('Python-Implementation: {}'.format(sys.implementation))
+
     def trigger(self, arg):
-        print("ImportButton was pressed.")
+        self.logger.info(f'Import was started from the menu with argument "{arg}".')
+
         smgr = self.ctx.ServiceManager
+        self.log_python_version()
+
         file_dialog = smgr.createInstanceWithContext('com.sun.star.ui.dialogs.FilePicker', self.ctx)
         file_dialog.initialize((FILEOPEN_SIMPLE,))
         file_dialog.appendFilter('iCalendar-Datei (.ics)', '*.ics')
@@ -134,18 +171,18 @@ class ImportButton(unohelper.Base, XJobExecutor):
                 # TODO: Allow multiple files to be imported into a single worksheet.
                 fill_table(self.ctx, uno.fileUrlToSystemPath(list_of_files[0]))
             except UnicodeDecodeError as e:
-                show_message_box(self.ctx, 'Fehler', 'Fehler beim Einlesen der Datei.')
-                print(e)
+                show_message_box(self.ctx, 'Error', 'Unicode error while reading file.')
+                self.logger.error(e)
             except RuntimeException as e:
-                show_message_box(self.ctx, 'Fehler', 'Fehler im UNO-System.')
-                print(e)
+                show_message_box(self.ctx, 'Error', 'An UNO error occured.')
+                self.logger.error(e)
             except NotImplementedError as e:
-                show_message_box(self.ctx, 'Fehler', 'Datei enthält mehrere Kalender. Diese Funktion wird noch nicht unterstützt.')
-                print(e)
+                show_message_box(self.ctx, 'Error', 'File contains multiple calendars. This is not yet supported.')
+                self.logger.error(e)
             except ParseError as e:
-                show_message_box(self.ctx, 'Fehler', 'Kalender-Datei ist fehlerhaft.')
-                print(e)
-            show_message_box(self.ctx, 'Kalender importiert', 'Die Kalender-Datei wurde erfolgreich importiert.')
+                show_message_box(self.ctx, 'Error', 'Calendar file not valid.')
+                self.logger.error(e)
+            show_message_box(self.ctx, 'Imported calender', 'Calendar file was successfully imported.')
 
 
 def show_message_box(ctx, title, message):
@@ -171,7 +208,7 @@ g_ImplementationHelper.addImplementation(
 if __name__ == '__main__':
     import os
 
-    # start OpenOffice.org, listen for connections and open testing document
+    # start LibreOffice, listen for connections and open testing document
     os.system("/usr/bin/libreoffice --calc '--accept=socket,host=localhost,port=2002;urp;' &")
 
     # get local context info
@@ -181,17 +218,17 @@ if __name__ == '__main__':
 
     ctx = None
 
-    # wait until the OO.o starts and connection is established
+    # wait until LibreOffice starts and connection is established
     while ctx == None:
         try:
             ctx = resolver.resolve("uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext")
         except Exception as e:
             pass
 
-    print("Testing ImportButton...")
+    print("Testing IcalImporter...")
 
     # trigger our job
     testjob = ImportButton(ctx)
     testjob.trigger(())
 
-    print("ImportButton tested.")
+    print("IcalImporter tested.")
