@@ -10,6 +10,7 @@
 
 import sys
 import logging
+import gettext
 from pathlib import Path
 from datetime import timedelta
 
@@ -38,6 +39,7 @@ class IcalImporter(unohelper.Base, XJobExecutor):
     def __init__(self, ctx):
         self.ctx = ctx
         self.init_logging()
+        self.init_localization()
 
     def init_logging(self):
         """Initializes the logger and sets log file name and log levels.
@@ -45,7 +47,7 @@ class IcalImporter(unohelper.Base, XJobExecutor):
         This code is inspired by the LibreOffice extension "Code Highligher 2"
         licensed under the GNU General Public License version 3."""
         self.logger = logging.getLogger('import_ical')
-        formatter = logging.Formatter("%(levelname)s [%(funcName)s::%(lineno)d] %(message)s")
+        formatter = logging.Formatter("%(asctime)s %(levelname)s [%(funcName)s::%(lineno)d] %(message)s")
         self.logger.setLevel(logging.DEBUG)
         console_handler = logging.StreamHandler()
         console_handler.setFormatter(formatter)
@@ -57,7 +59,7 @@ class IcalImporter(unohelper.Base, XJobExecutor):
             userpath = uno.getComponentContext().ServiceManager.createInstance(
                             "com.sun.star.util.PathSubstitution").substituteVariables("$(user)", True)
             logfile = Path(uno.fileUrlToSystemPath(userpath)) / 'import_ical.log'
-            file_handler = logging.FileHandler(logfile, mode="w", delay=True)
+            file_handler = logging.FileHandler(logfile, mode="a", delay=True)
             file_handler.setLevel(logging.DEBUG)
             file_handler.setFormatter(formatter)
             self.logger.addHandler(file_handler)
@@ -65,11 +67,27 @@ class IcalImporter(unohelper.Base, XJobExecutor):
             # At installation time, no context is available -> just ignore it.
             pass
 
+    def init_localization(self):
+        """Initializes gettext for localization.
+
+        This code is inspired by the LibreOffice extension "Code Highligher 2"
+        licensed under the GNU General Public License version 3."""
+        # get information about extension and it's location
+        pip = self.ctx.getByName("/singletons/com.sun.star.deployment.PackageInformationProvider")
+        self.logger.debug(f'Extensions: {pip.getExtensionList()}')
+        extension_path = pip.getPackageLocation('de.ichmann.libreoffice.import_ical')
+        self.logger.debug(f'Extension path: {extension_path}')
+        # load translation for locale
+        localizations_dir = Path(uno.fileUrlToSystemPath(extension_path)) / 'localizations'
+        self.logger.debug(f'Locales folder: {localizations_dir}')
+        gettext.install('import_ical', localizations_dir, names=['_'])
+        self.logger.debug('gettext installed')
+
     def log_python_version(self):
-        self.logger.info('Python version: {}'.format(sys.version))
-        self.logger.info('Python path: {}'.format(sys.path))
-        self.logger.info('Python platform: {}'.format(sys.platform))
-        self.logger.info('Python implementation: {}'.format(sys.implementation))
+        self.logger.debug('Python version: {}'.format(sys.version))
+        self.logger.debug('Python path: {}'.format(sys.path))
+        self.logger.debug('Python platform: {}'.format(sys.platform))
+        self.logger.debug('Python implementation: {}'.format(sys.implementation))
 
     def trigger(self, arg):
         self.logger.info(f'Import was started from the menu with argument "{arg}".')
@@ -79,8 +97,8 @@ class IcalImporter(unohelper.Base, XJobExecutor):
 
         file_dialog = smgr.createInstanceWithContext('com.sun.star.ui.dialogs.FilePicker', self.ctx)
         file_dialog.initialize((FILEOPEN_SIMPLE,))
-        file_dialog.appendFilter('iCalendar file (.ics)', '*.ics')
-        file_dialog.setTitle('Open iCalendar file')
+        file_dialog.appendFilter(_('iCalendar file (.ics)'), '*.ics')
+        file_dialog.setTitle(_('Open iCalendar file'))
         file_dialog.setMultiSelectionMode(False)
         ok = file_dialog.execute()
         if ok:
@@ -89,18 +107,18 @@ class IcalImporter(unohelper.Base, XJobExecutor):
             try:
                 self.fill_table(self.ctx, uno.fileUrlToSystemPath(list_of_files[0]))
             except UnicodeDecodeError as e:
-                show_message_box(self.ctx, 'Error', 'Unicode error while reading file.')
+                show_message_box(self.ctx, _('Error'), _('Unicode error while reading file.'))
                 self.logger.error(e)
             except RuntimeException as e:
-                show_message_box(self.ctx, 'Error', 'An UNO error occured.')
+                show_message_box(self.ctx, _('Error'), _('An UNO error occured.'))
                 self.logger.error(e)
             except NotImplementedError as e:
-                show_message_box(self.ctx, 'Error', 'File contains multiple calendars. This is not yet supported.')
+                show_message_box(self.ctx, _('Error'), _('File contains multiple calendars. This is not yet supported.'))
                 self.logger.error(e)
             except ParseError as e:
-                show_message_box(self.ctx, 'Error', 'Calendar file not valid.')
+                show_message_box(self.ctx, _('Error'), _('Calendar file not valid.'))
                 self.logger.error(e)
-            show_message_box(self.ctx, 'Calender imported', 'Calendar file was successfully imported.')
+            show_message_box(self.ctx, _('Calender imported'), _('Calendar file was successfully imported.'))
 
     def fill_table(self, ctx, filename):
         """Fills the first worksheet with data from an iCalendar file.
@@ -176,7 +194,7 @@ class IcalImporter(unohelper.Base, XJobExecutor):
         elif isinstance(data, set):
             cell.String = ', '.join([x for x in data])
         else:
-            print('Unsupported type: {}'.format(type(data)))
+            self.logger.error('Unsupported data type: {}'.format(type(data)))
             # return data without conversion to trigger an exception
             return data
 

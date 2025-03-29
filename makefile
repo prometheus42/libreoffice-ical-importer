@@ -1,9 +1,9 @@
-all:	clean zip install
+all:	clean compile-translations zip install
 
 clean:
 	unopkg remove de.ichmann.libreoffice.import_ical
 	rm import_ical.oxt
-	
+
 zip:
 	zip -r import_ical.oxt \
 		description.xml \
@@ -17,6 +17,7 @@ zip:
 		description/description_en.txt \
 		registration/license_de.txt \
 		registration/license_en.txt \
+		localizations/* \
 		src/pythonpath/*
 
 build:
@@ -24,3 +25,11 @@ build:
 
 install:
 	unopkg add import_ical.oxt
+
+update-translations:
+	xgettext src/import_ical.py -p localizations/en/LC_MESSAGES/
+	xgettext src/import_ical.py -p localizations/de/LC_MESSAGES/
+
+compile-translations:
+	msgfmt -o localizations/de/LC_MESSAGES/import_ical.mo localizations/de/LC_MESSAGES/import_ical.po
+	msgfmt -o localizations/en/LC_MESSAGES/import_ical.mo localizations/en/LC_MESSAGES/import_ical.po

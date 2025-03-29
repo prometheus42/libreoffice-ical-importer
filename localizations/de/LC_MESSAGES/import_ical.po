@@ -1,0 +1,55 @@
+# iCalendar Importer
+# Copyright (C) 2025 Christian Wichmann
+# This file is distributed under the same license as the import_ical package.
+# Christian Wichmann <christian@overcoded.dev>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: import_ical 0.3.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-29 14:41+0100\n"
+"PO-Revision-Date: 2025-03-29 14:41+0100\n"
+"Last-Translator: Christian Wichmann <christian@overcoded.dev>\n"
+"Language: Deutsch\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+#: src/import_ical.py:97
+msgid "iCalendar file (.ics)"
+msgstr "iCalendar-Datei (.ics)"
+
+#: src/import_ical.py:98
+msgid "Open iCalendar file"
+msgstr "Lade iCalendar-Datei"
+
+#: src/import_ical.py:107 src/import_ical.py:110 src/import_ical.py:113
+#: src/import_ical.py:116
+msgid "Error"
+msgstr "Fehler"
+
+#: src/import_ical.py:107
+msgid "Unicode error while reading file."
+msgstr "Fehler beim Einlesen der Datei."
+
+#: src/import_ical.py:110
+msgid "An UNO error occured."
+msgstr "Fehler im UNO-System."
+
+#: src/import_ical.py:113
+msgid "File contains multiple calendars. This is not yet supported."
+msgstr "Datei enthält mehrere Kalender. Diese Funktion wird noch nicht unterstützt."
+
+#: src/import_ical.py:116
+msgid "Calendar file not valid."
+msgstr "Kalender-Datei ist fehlerhaft."
+
+#: src/import_ical.py:118
+msgid "Calender imported"
+msgstr "Kalender importiert"
+
+#: src/import_ical.py:118
+msgid "Calendar file was successfully imported."
+msgstr "Die Kalender-Datei wurde erfolgreich importiert."
