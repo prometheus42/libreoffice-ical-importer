@@ -28,7 +28,7 @@ from com.sun.star.task import XJobExecutor
 from com.sun.star.ui.dialogs.TemplateDescription import FILEOPEN_SIMPLE
 
 
-class ImportButton(unohelper.Base, XJobExecutor):
+class IcalImporter(unohelper.Base, XJobExecutor):
     """Handles a click on the menu item for importing an iCalendar file.
 
     After the click on the menu item, a file picker dialog is shown for the
@@ -66,10 +66,10 @@ class ImportButton(unohelper.Base, XJobExecutor):
             pass
 
     def log_python_version(self):
-        self.logger.info('Python-Version: {}'.format(sys.version))
-        self.logger.info('Python-Path: {}'.format(sys.path))
-        self.logger.info('Python-Platform: {}'.format(sys.platform))
-        self.logger.info('Python-Implementation: {}'.format(sys.implementation))
+        self.logger.info('Python version: {}'.format(sys.version))
+        self.logger.info('Python path: {}'.format(sys.path))
+        self.logger.info('Python platform: {}'.format(sys.platform))
+        self.logger.info('Python implementation: {}'.format(sys.implementation))
 
     def trigger(self, arg):
         self.logger.info(f'Import was started from the menu with argument "{arg}".')
@@ -87,7 +87,6 @@ class ImportButton(unohelper.Base, XJobExecutor):
             list_of_files = file_dialog.getFiles()
             file_dialog.dispose()
             try:
-                # TODO: Allow multiple files to be imported into a single worksheet.
                 self.fill_table(self.ctx, uno.fileUrlToSystemPath(list_of_files[0]))
             except UnicodeDecodeError as e:
                 show_message_box(self.ctx, 'Error', 'Unicode error while reading file.')
@@ -101,7 +100,7 @@ class ImportButton(unohelper.Base, XJobExecutor):
             except ParseError as e:
                 show_message_box(self.ctx, 'Error', 'Calendar file not valid.')
                 self.logger.error(e)
-            show_message_box(self.ctx, 'Imported calender', 'Calendar file was successfully imported.')
+            show_message_box(self.ctx, 'Calender imported', 'Calendar file was successfully imported.')
 
     def fill_table(self, ctx, filename):
         """Fills the first worksheet with data from an iCalendar file.
@@ -196,8 +195,8 @@ def show_message_box(ctx, title, message):
 
 g_ImplementationHelper = unohelper.ImplementationHelper()
 g_ImplementationHelper.addImplementation(
-    ImportButton,
-    'com.platformedia.libreoffice.extensions.import_ical.ImportButton',
+    IcalImporter,
+    'com.platformedia.libreoffice.extensions.import_ical.IcalImporter',
     ('com.sun.star.task.Job',),
 )
 
@@ -225,7 +224,7 @@ if __name__ == '__main__':
     print("Testing IcalImporter...")
 
     # trigger our job
-    testjob = ImportButton(ctx)
+    testjob = IcalImporter(ctx)
     testjob.trigger(())
 
     print("IcalImporter tested.")

@@ -16,7 +16,7 @@
                 <node oor:name="Submenu">
                     <node oor:name="m1" oor:op="replace">
                         <prop oor:name="URL" oor:type="xs:string">
-                            <value>service:com.platformedia.libreoffice.extensions.import_ical.ImportButton?execute</value>
+                            <value>service:com.platformedia.libreoffice.extensions.import_ical.IcalImporter?execute</value>
                         </prop>
                         <prop oor:name="Title" oor:type="xs:string">
                             <value/>
@@ -37,7 +37,7 @@
         <node oor:name="Images">
             <node oor:name="com.platformedia.libreoffice.extensions.import_ical" oor:op="replace">
                 <prop oor:name="URL">
-                    <value>service:com.platformedia.libreoffice.extensions.import_ical.ImportButton?execute</value>
+                    <value>service:com.platformedia.libreoffice.extensions.import_ical.IcalImporter?execute</value>
                 </prop>
                 <node oor:name="UserDefinedImages">
                     <prop oor:name="ImageBigURL">
