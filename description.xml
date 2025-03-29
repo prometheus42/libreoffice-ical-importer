@@ -4,7 +4,7 @@
     xmlns:lo="http://libreoffice.org/extensions/description/2011"
     xmlns:xlink="http://www.w3.org/1999/xlink">
     <identifier value="de.ichmann.libreoffice.import_ical"/>
-    <version value="0.3.1"/>
+    <version value="0.3.2"/>
     <platform value="all"/>
     <display-name>
         <name lang="de">iCalendar Import</name>
