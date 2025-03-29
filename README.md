@@ -17,6 +17,11 @@ As introduction for scripting LibreOffice with Python see these sources:
 
 # Building LibreOffice extension
 
+Before the extension can be packaged, all translations have to be compiled as
+.mo files to be used by gettext:
+
+    make compile-translations
+
 To build a LibreOffice extension use the Makefile that is provided with the project:
 
     make zip
@@ -46,6 +51,20 @@ Alternativly, you can use the provided spec file in the repo:
 5. Choose iCal file
 
 The fields of the iCal file should be stored as columns in the table.
+
+# Debugging
+
+By default, there is no default stdout on Windows. All output from the
+extension will just vanish. To get a console to be used as stdout, you can
+start LibreOffice using soffice.com instead of soffice.exe as described in the
+[documentation](https://wiki.documentfoundation.org/Macros/Python_Design_Guide#Output_to_Consoles):
+
+    start "C:\Program Files\LibreOffice\program\soffice.com"
+
+All debug messages will also be written to log file:
+
+- /home/\<username\>/.config/libreoffice/4/user/ (Linux)
+- C:\Users\\<username\>\AppData\Roaming\LibreOffice\4\user\ (Windows)
 
 # File list
 

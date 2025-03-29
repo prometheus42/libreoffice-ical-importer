@@ -53,9 +53,7 @@ class IcalImporter(unohelper.Base, XJobExecutor):
         console_handler.setFormatter(formatter)
         self.logger.addHandler(console_handler)
         try:
-            # log file should be stored at:
-            #  - linux: /home/<username>/.config/libreoffice/4/user/
-            #  - windows: C:\Users\<username>\AppData\Roaming\LibreOffice\4\user\
+            # log file should be stored in the user directory
             userpath = uno.getComponentContext().ServiceManager.createInstance(
                             "com.sun.star.util.PathSubstitution").substituteVariables("$(user)", True)
             logfile = Path(uno.fileUrlToSystemPath(userpath)) / 'import_ical.log'
@@ -64,7 +62,7 @@ class IcalImporter(unohelper.Base, XJobExecutor):
             file_handler.setFormatter(formatter)
             self.logger.addHandler(file_handler)
         except RuntimeException:
-            # At installation time, no context is available -> just ignore it.
+            # ignore it, if there is no context at installation time
             pass
 
     def init_localization(self):
@@ -214,7 +212,7 @@ def show_message_box(ctx, title, message):
 g_ImplementationHelper = unohelper.ImplementationHelper()
 g_ImplementationHelper.addImplementation(
     IcalImporter,
-    'com.platformedia.libreoffice.extensions.import_ical.IcalImporter',
+    'de.ichmann.libreoffice.import_ical.IcalImporter',
     ('com.sun.star.task.Job',),
 )
 
