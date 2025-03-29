@@ -7,7 +7,7 @@
 
     <node oor:name="AddonUI">
         <node oor:name="OfficeMenuBar">
-            <node oor:name="com.platformedia.libreoffice.extensions.import_ical" oor:op="replace">
+            <node oor:name="de.ichmann.libreoffice.import_ical" oor:op="replace">
                 <prop oor:name="Title" oor:type="xs:string">
                     <value/>
                     <value xml:lang="en-US">Tools</value>
@@ -16,7 +16,7 @@
                 <node oor:name="Submenu">
                     <node oor:name="m1" oor:op="replace">
                         <prop oor:name="URL" oor:type="xs:string">
-                            <value>service:com.platformedia.libreoffice.extensions.import_ical.IcalImporter?execute</value>
+                            <value>service:de.ichmann.libreoffice.import_ical.IcalImporter?execute</value>
                         </prop>
                         <prop oor:name="Title" oor:type="xs:string">
                             <value/>
@@ -35,13 +35,14 @@
         </node>
 
         <node oor:name="Images">
-            <node oor:name="com.platformedia.libreoffice.extensions.import_ical" oor:op="replace">
+            <node oor:name="de.ichmann.libreoffice.import_ical" oor:op="replace">
                 <prop oor:name="URL">
-                    <value>service:com.platformedia.libreoffice.extensions.import_ical.IcalImporter?execute</value>
+                    <value>service:de.ichmann.libreoffice.import_ical.IcalImporter?execute</value>
                 </prop>
                 <node oor:name="UserDefinedImages">
                     <prop oor:name="ImageBigURL">
-                    <value>%origin%/images/menu_icon.png</value>
+                    <!-- Source: https://wiki.openoffice.org/wiki/Documentation/DevGuide/WritingUNO/AddOns/Images_for_Toolbars_and_Menus -->
+                    <value>vnd.sun.star.extension://de.ichmann.libreoffice.import_ical/images/menu_icon.png</value>
                     </prop>    
                 </node>
             </node>

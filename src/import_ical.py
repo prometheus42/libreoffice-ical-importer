@@ -81,7 +81,7 @@ class IcalImporter(unohelper.Base, XJobExecutor):
         localizations_dir = Path(uno.fileUrlToSystemPath(extension_path)) / 'localizations'
         self.logger.debug(f'Locales folder: {localizations_dir}')
         gettext.install('import_ical', localizations_dir, names=['_'])
-        self.logger.debug('gettext installed')
+        self.logger.debug('Translations from gettext installed.')
 
     def log_python_version(self):
         self.logger.debug('Python version: {}'.format(sys.version))
@@ -224,6 +224,7 @@ if __name__ == '__main__':
 
     # start LibreOffice, listen for connections and open testing document
     os.system("/usr/bin/libreoffice --calc '--accept=socket,host=localhost,port=2002;urp;' &")
+    #os.system(r'start "C:\Program Files\LibreOffice\program\soffice" -accept="socket,host=0,port=2002;urp;"')
 
     # get local context info
     localContext = uno.getComponentContext()
