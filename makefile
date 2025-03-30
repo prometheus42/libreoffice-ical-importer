@@ -3,6 +3,8 @@ all:	clean compile-translations zip install
 clean:
 	unopkg remove de.ichmann.libreoffice.import_ical
 	rm import_ical.oxt
+	rm localizations/en/LC_MESSAGES/import_ical.mo
+	rm localizations/de/LC_MESSAGES/import_ical.mo
 
 zip:
 	zip -r import_ical.oxt \
@@ -24,8 +26,12 @@ install:
 	unopkg add import_ical.oxt
 
 update-translations:
-	xgettext src/import_ical.py -p localizations/en/LC_MESSAGES/
-	xgettext src/import_ical.py -p localizations/de/LC_MESSAGES/
+	xgettext src/import_ical.py -o localizations/en/LC_MESSAGES/messages.pot
+	xgettext src/import_ical.py -o localizations/de/LC_MESSAGES/messages.pot
+	msgmerge -U --backup=none localizations/en/LC_MESSAGES/import_ical.po localizations/en/LC_MESSAGES/messages.pot
+	msgmerge -U --backup=none localizations/de/LC_MESSAGES/import_ical.po localizations/de/LC_MESSAGES/messages.pot
+	rm localizations/en/LC_MESSAGES/messages.pot
+	rm localizations/de/LC_MESSAGES/messages.pot
 
 compile-translations:
 	msgfmt -o localizations/de/LC_MESSAGES/import_ical.mo localizations/de/LC_MESSAGES/import_ical.po

@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: import_ical 0.3.2\n"
+"Project-Id-Version: import_ical 0.3.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-29 14:41+0100\n"
+"POT-Creation-Date: 2025-03-30 14:54+0200\n"
 "PO-Revision-Date: 2025-03-29 14:41+0100\n"
 "Last-Translator: Christian Wichmann <christian@overcoded.dev>\n"
 "Language: English\n"
@@ -16,39 +16,47 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/import_ical.py:97
-msgid "iCalendar file (.ics)"
-msgstr ""
-
 #: src/import_ical.py:98
+msgid "iCalendar file (.ics)"
+msgstr "iCalendar file (.ics)"
+
+#: src/import_ical.py:99
 msgid "Open iCalendar file"
-msgstr ""
+msgstr "Open iCalendar file"
 
-#: src/import_ical.py:107 src/import_ical.py:110 src/import_ical.py:113
-#: src/import_ical.py:116
+#: src/import_ical.py:108 src/import_ical.py:111 src/import_ical.py:114
+#: src/import_ical.py:117
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
-#: src/import_ical.py:107
-msgid "Unicode error while reading file."
+#: src/import_ical.py:108
+msgid ""
+"Calendar file has an invalid character endoding,\n"
+"should be Unicode UTF-8."
 msgstr ""
+"Calendar file has an invalid character endoding,\n"
+"should be Unicode UTF-8."
 
-#: src/import_ical.py:110
+#: src/import_ical.py:111
 msgid "An UNO error occured."
-msgstr ""
+msgstr "An UNO error occured."
 
-#: src/import_ical.py:113
-msgid "File contains multiple calendars. This is not yet supported."
+#: src/import_ical.py:114
+msgid ""
+"File contains multiple calendars.\n"
+"This is not yet supported."
 msgstr ""
+"File contains multiple calendars.\n"
+"This is not yet supported."
 
-#: src/import_ical.py:116
-msgid "Calendar file not valid."
-msgstr ""
+#: src/import_ical.py:117
+msgid "Calendar file is not valid."
+msgstr "Calendar file is not valid."
 
-#: src/import_ical.py:118
+#: src/import_ical.py:120
 msgid "Calender imported"
-msgstr ""
+msgstr "Calender imported"
 
-#: src/import_ical.py:118
+#: src/import_ical.py:120
 msgid "Calendar file was successfully imported."
-msgstr ""
+msgstr "Calendar file was successfully imported."
